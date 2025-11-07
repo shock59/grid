@@ -14,11 +14,11 @@ for (let rowIndex = 0; rowIndex < gridDimensions.height; rowIndex++) {
   for (let columnIndex = 0; columnIndex < gridDimensions.width; columnIndex++) {
     const cell = document.createElement("div");
     cell.classList.add("grid-cell");
-    cell.innerHTML = `${rowIndex} ${columnIndex}`;
+    cell.innerHTML = `${rowIndex * gridDimensions.width + columnIndex}`;
     row.appendChild(cell);
   }
 
   grid.appendChild(row);
 }
 
-document.querySelector<HTMLDivElement>("#app")!.appendChild(grid);
+document.querySelector<HTMLDivElement>("#game")!.appendChild(grid);
