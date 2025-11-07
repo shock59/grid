@@ -1,4 +1,4 @@
-import overlapping from "./lib/overlapping";
+import contains from "./lib/contains";
 import "./style.css";
 
 class Grid {
@@ -59,7 +59,7 @@ class DraggableTile {
     this.element.classList.add("draggable-tile");
 
     this.element.addEventListener("mousedown", (e) => this.mouseDown(e));
-    document.addEventListener("mouseup", () => this.mouseUp());
+    document.addEventListener("mouseup", (e) => this.mouseUp(e));
     document.addEventListener("mousemove", (e) => this.mouseMove(e));
   }
 
@@ -70,11 +70,11 @@ class DraggableTile {
     this.beingDragged = true;
   }
 
-  mouseUp() {
+  mouseUp(event: MouseEvent) {
     if (!this.beingDragged) return;
     this.element.style.transition = "";
     this.beingDragged = false;
-    this.game.lockDraggableTile(this);
+    this.game.lockDraggableTile(this, event);
   }
 
   mouseMove(event: MouseEvent) {
@@ -129,25 +129,21 @@ class Game {
     this.grid.element.style.margin = `${cellSize / 2}px`;
   }
 
-  lockDraggableTile(draggableTile: DraggableTile) {
-    const dtRect = draggableTile.element.getBoundingClientRect();
+  lockDraggableTile(draggableTile: DraggableTile, event: MouseEvent) {
+    const mouseXY = { x: event.x, y: event.y };
+
     const gridRect = this.grid.element.getBoundingClientRect();
+    if (!contains(mouseXY, gridRect)) return;
 
-    if (overlapping(dtRect, gridRect) == -1) return;
-
-    let overlappingCells: [DOMRect, number][] = [];
     for (const cell of this.grid.element.querySelectorAll<HTMLDivElement>(
       ".grid-cell"
     )) {
       const cellRect = cell.getBoundingClientRect();
-      const overlap = overlapping(dtRect, cellRect);
-      if (overlap == -1) continue;
-      overlappingCells.push([cellRect, overlap]);
+      if (!contains(mouseXY, cellRect)) continue;
+      draggableTile.position = { x: cellRect.x, y: cellRect.y };
+      draggableTile.updateStyle();
+      return;
     }
-
-    const cellRect = overlappingCells.toSorted((a, b) => a[1] - b[1])[0][0];
-    draggableTile.position = { x: cellRect.x, y: cellRect.y };
-    draggableTile.updateStyle();
   }
 }
 
