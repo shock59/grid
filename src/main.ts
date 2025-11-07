@@ -89,11 +89,19 @@ class DraggableTile {
 
   mouseMove(event: MouseEvent) {
     if (!this.beingDragged) return;
+    const rect = this.element.getBoundingClientRect();
     this.element.style.transition = "none";
     this.position = {
       x: event.x - this.dragOffset.x,
       y: event.y - this.dragOffset.y,
     };
+
+    const maxX = window.innerWidth - rect.width;
+    const maxY = window.innerHeight - rect.height;
+    if (this.position.x < 0) this.position.x = 0;
+    if (this.position.x > maxX) this.position.x = maxX;
+    if (this.position.y < 0) this.position.y = 0;
+    if (this.position.y > maxY) this.position.y = maxY;
     this.updateStyle();
   }
 
