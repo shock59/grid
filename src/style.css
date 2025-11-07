@@ -35,7 +35,7 @@ body {
   justify-content: center;
   align-items: center;
   color: #eeeeee;
-  outline: 1px #303030 solid;
+  border: 1px #303030 solid;
 }
 
 .sidebar {
@@ -54,4 +54,5 @@ body {
   color: #eeeeee;
   outline: 1px #ff4040 solid;
   cursor: pointer;
+  transition: 200ms ease-out;
 }

@@ -66,11 +66,13 @@ class DraggableTile {
   mouseDown(event: MouseEvent) {
     const rect = this.element.getBoundingClientRect();
     this.dragOffset = { x: event.x - rect.left, y: event.y - rect.top };
+    this.element.style.transition = "none";
     this.beingDragged = true;
   }
 
   mouseUp() {
     if (!this.beingDragged) return;
+    this.element.style.transition = "";
     this.beingDragged = false;
     this.game.lockDraggableTile(this);
   }
@@ -131,18 +133,21 @@ class Game {
     const dtRect = draggableTile.element.getBoundingClientRect();
     const gridRect = this.grid.element.getBoundingClientRect();
 
-    if (!overlapping(dtRect, gridRect)) return;
+    if (overlapping(dtRect, gridRect) == -1) return;
 
+    let overlappingCells: [DOMRect, number][] = [];
     for (const cell of this.grid.element.querySelectorAll<HTMLDivElement>(
       ".grid-cell"
     )) {
       const cellRect = cell.getBoundingClientRect();
-      if (overlapping(dtRect, cellRect)) {
-        draggableTile.position = { x: cellRect.x, y: cellRect.y };
-        draggableTile.updateStyle();
-        return;
-      }
+      const overlap = overlapping(dtRect, cellRect);
+      if (overlap == -1) continue;
+      overlappingCells.push([cellRect, overlap]);
     }
+
+    const cellRect = overlappingCells.toSorted((a, b) => a[1] - b[1])[0][0];
+    draggableTile.position = { x: cellRect.x, y: cellRect.y };
+    draggableTile.updateStyle();
   }
 }
 
