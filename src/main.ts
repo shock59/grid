@@ -121,8 +121,8 @@ class Game {
     this.element = document.querySelector<HTMLDivElement>("#game")!;
 
     const gridDimensions = {
-      width: 16,
-      height: 16,
+      width: 10,
+      height: 10,
     };
     this.grid = new Grid(gridDimensions);
     this.sidebar = new Sidebar();
