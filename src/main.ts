@@ -31,19 +31,6 @@ class Grid {
       this.element.appendChild(row);
     }
     this.containerElement.appendChild(this.element);
-
-    window.addEventListener("resize", () => this.updateCellSizes());
-    this.updateCellSizes();
-  }
-
-  updateCellSizes() {
-    const maxGridSize = Math.min(window.innerWidth, window.innerHeight);
-    const cellCount = Math.max(this.dimensions.width, this.dimensions.height);
-    const cellSize = maxGridSize / (cellCount + 1 + 2); // Add 1 to cellCount to add a margin of half a cell and 2 for the sidebar
-    document
-      .querySelector<HTMLDivElement>("#game")!
-      .style.setProperty("--cell-size", `${cellSize}px`);
-    this.element.style.margin = `${cellSize / 2}px`;
   }
 }
 
@@ -93,14 +80,42 @@ class DraggableTile {
   }
 }
 
-const gridDimensions = {
-  width: 16,
-  height: 16,
-};
-const grid = new Grid(gridDimensions);
-const sidebar = new Sidebar();
+class Game {
+  element: HTMLDivElement;
 
-const gameElement = document.querySelector<HTMLDivElement>("#game")!;
-gameElement.appendChild(grid.containerElement);
-gameElement.appendChild(sidebar.element);
-gameElement.appendChild(new DraggableTile().element);
+  grid: Grid;
+  sidebar: Sidebar;
+
+  constructor() {
+    this.element = document.querySelector<HTMLDivElement>("#game")!;
+
+    const gridDimensions = {
+      width: 16,
+      height: 16,
+    };
+    this.grid = new Grid(gridDimensions);
+    this.sidebar = new Sidebar();
+
+    this.element.appendChild(this.grid.containerElement);
+    this.element.appendChild(this.sidebar.element);
+    this.element.appendChild(new DraggableTile().element);
+
+    window.addEventListener("resize", () => this.updateCellSizes());
+    this.updateCellSizes();
+  }
+
+  updateCellSizes() {
+    const maxGridSize = Math.min(window.innerWidth, window.innerHeight);
+    const cellCount = Math.max(
+      this.grid.dimensions.width,
+      this.grid.dimensions.height
+    );
+    const cellSize = maxGridSize / (cellCount + 1 + 2); // Add 1 to cellCount to add a margin of half a cell and 2 for the sidebar
+    document
+      .querySelector<HTMLDivElement>("#game")!
+      .style.setProperty("--cell-size", `${cellSize}px`);
+    this.grid.element.style.margin = `${cellSize / 2}px`;
+  }
+}
+
+new Game();
