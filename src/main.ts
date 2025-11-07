@@ -26,7 +26,17 @@ class Grid {
       }
 
       this.element.appendChild(row);
+
+      window.addEventListener("resize", () => this.updateCellSizes());
+      this.updateCellSizes();
     }
+  }
+
+  updateCellSizes() {
+    const maxGridSize = Math.min(window.innerWidth, window.innerHeight);
+    const cellCount = Math.max(this.dimensions.width, this.dimensions.height);
+    const cellSize = maxGridSize / (cellCount + 1); // Add 1 to cellCount to add a margin of half a cell
+    this.element.style.setProperty("--cell-size", `${cellSize}px`);
   }
 }
 
