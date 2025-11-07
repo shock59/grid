@@ -56,6 +56,43 @@ class Sidebar {
   }
 }
 
+class DraggableTile {
+  element: HTMLDivElement;
+  position: { x: number; y: number } = { x: 0, y: 0 };
+  beingDragged: boolean = false;
+  dragOffset: { x: number; y: number } = { x: 0, y: 0 };
+
+  constructor() {
+    this.element = document.createElement("div");
+    this.element.classList.add("draggable-tile");
+
+    this.element.addEventListener("mousedown", (e) => this.mouseDown(e));
+    document.addEventListener("mouseup", () => this.mouseUp());
+    document.addEventListener("mousemove", (e) => this.mouseMove(e));
+  }
+
+  mouseDown(event: MouseEvent) {
+    const rect = this.element.getBoundingClientRect();
+    this.dragOffset = { x: event.x - rect.left, y: event.y - rect.top };
+    this.beingDragged = true;
+  }
+
+  mouseUp() {
+    if (!this.beingDragged) return;
+    this.beingDragged = false;
+  }
+
+  mouseMove(event: MouseEvent) {
+    if (!this.beingDragged) return;
+    this.position = {
+      x: event.x - this.dragOffset.x,
+      y: event.y - this.dragOffset.y,
+    };
+    this.element.style.left = `${this.position.x}px`;
+    this.element.style.top = `${this.position.y}px`;
+  }
+}
+
 const gridDimensions = {
   width: 16,
   height: 16,
@@ -66,3 +103,4 @@ const sidebar = new Sidebar();
 const gameElement = document.querySelector<HTMLDivElement>("#game")!;
 gameElement.appendChild(grid.containerElement);
 gameElement.appendChild(sidebar.element);
+gameElement.appendChild(new DraggableTile().element);

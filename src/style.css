@@ -10,6 +10,8 @@ body {
   justify-content: center;
   align-items: center;
   background: #101010;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .grid-container {
@@ -40,4 +42,16 @@ body {
   background-color: #202020;
   height: 100vh;
   width: calc(2 * var(--cell-size));
+}
+
+.draggable-tile {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  color: #eeeeee;
+  outline: 1px #ff4040 solid;
+  cursor: pointer;
 }
