@@ -48,11 +48,8 @@ export default class Game {
   lockDraggableTile(draggableTile: DraggableTile, event: MouseEvent) {
     const mouseXY = { x: event.x, y: event.y };
 
-    const gridRect = this.grid.element.getBoundingClientRect();
-    if (!contains(mouseXY, gridRect)) return;
-
-    for (const cell of this.grid.element.querySelectorAll<HTMLDivElement>(
-      ".grid-cell"
+    for (const cell of this.element.querySelectorAll<HTMLDivElement>(
+      ".grid-cell, .sidebar-holder"
     )) {
       const cellRect = cell.getBoundingClientRect();
       if (!contains(mouseXY, cellRect)) continue;

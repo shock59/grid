@@ -39,9 +39,25 @@ body {
 }
 
 .sidebar {
-  background-color: #202020;
   height: 100vh;
   width: calc(2 * var(--cell-size));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+  background-color: #202020;
+}
+
+.sidebar-holder {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  margin-bottom: calc(var(--cell-size) / 2);
+  flex-shrink: 0;
+  background: #383838;
+}
+
+.sidebar-holder:first-child {
+  margin-top: calc(var(--cell-size) / 2);
 }
 
 .draggable-tile {
