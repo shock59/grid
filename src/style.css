@@ -53,6 +53,6 @@ body {
   position: absolute;
   color: #eeeeee;
   outline: 1px #ff4040 solid;
-  cursor: pointer;
-  transition: 200ms ease-out;
+  cursor: grab;
+  transition: 100ms;
 }

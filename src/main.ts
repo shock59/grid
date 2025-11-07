@@ -58,27 +58,38 @@ class DraggableTile {
     this.element = document.createElement("div");
     this.element.classList.add("draggable-tile");
 
+    this.updateStyle();
+
     this.element.addEventListener("mousedown", (e) => this.mouseDown(e));
     document.addEventListener("mouseup", (e) => this.mouseUp(e));
     document.addEventListener("mousemove", (e) => this.mouseMove(e));
   }
 
   mouseDown(event: MouseEvent) {
+    this.element.style.cursor = "grabbing";
+
     const rect = this.element.getBoundingClientRect();
-    this.dragOffset = { x: event.x - rect.left, y: event.y - rect.top };
-    this.element.style.transition = "none";
+    this.dragOffset = { x: rect.width / 2, y: rect.height / 2 };
+    this.position = {
+      x: event.x - this.dragOffset.x,
+      y: event.y - this.dragOffset.y,
+    };
+
+    this.updateStyle();
     this.beingDragged = true;
   }
 
   mouseUp(event: MouseEvent) {
     if (!this.beingDragged) return;
     this.element.style.transition = "";
+    this.element.style.cursor = "";
     this.beingDragged = false;
     this.game.lockDraggableTile(this, event);
   }
 
   mouseMove(event: MouseEvent) {
     if (!this.beingDragged) return;
+    this.element.style.transition = "none";
     this.position = {
       x: event.x - this.dragOffset.x,
       y: event.y - this.dragOffset.y,
