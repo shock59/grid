@@ -1,3 +1,4 @@
+import overlapping from "./lib/overlapping";
 import "./style.css";
 
 class Grid {
@@ -44,12 +45,16 @@ class Sidebar {
 }
 
 class DraggableTile {
+  game: Game;
+
   element: HTMLDivElement;
   position: { x: number; y: number } = { x: 0, y: 0 };
   beingDragged: boolean = false;
   dragOffset: { x: number; y: number } = { x: 0, y: 0 };
 
-  constructor() {
+  constructor(game: Game) {
+    this.game = game;
+
     this.element = document.createElement("div");
     this.element.classList.add("draggable-tile");
 
@@ -67,6 +72,7 @@ class DraggableTile {
   mouseUp() {
     if (!this.beingDragged) return;
     this.beingDragged = false;
+    this.game.lockDraggableTile(this);
   }
 
   mouseMove(event: MouseEvent) {
@@ -98,7 +104,7 @@ class Game {
 
     this.element.appendChild(this.grid.containerElement);
     this.element.appendChild(this.sidebar.element);
-    this.element.appendChild(new DraggableTile().element);
+    this.element.appendChild(new DraggableTile(this).element);
 
     window.addEventListener("resize", () => this.updateCellSizes());
     this.updateCellSizes();
@@ -115,6 +121,15 @@ class Game {
       .querySelector<HTMLDivElement>("#game")!
       .style.setProperty("--cell-size", `${cellSize}px`);
     this.grid.element.style.margin = `${cellSize / 2}px`;
+  }
+
+  lockDraggableTile(draggableTile: DraggableTile) {
+    const dtRect = draggableTile.element.getBoundingClientRect();
+    const gridRect = this.grid.element.getBoundingClientRect();
+
+    if (overlapping(dtRect, gridRect)) {
+      alert("You are overlapping with the grid!");
+    }
   }
 }
 
