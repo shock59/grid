@@ -6,9 +6,14 @@ body {
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   background: #101010;
+}
+
+.grid-container {
+  margin: 0 auto;
 }
 
 .grid {
@@ -29,4 +34,10 @@ body {
   align-items: center;
   color: #eeeeee;
   outline: 1px #303030 solid;
+}
+
+.sidebar {
+  background-color: #202020;
+  height: 100vh;
+  width: calc(2 * var(--cell-size));
 }
