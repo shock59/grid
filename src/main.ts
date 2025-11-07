@@ -6,7 +6,10 @@ class Grid {
   containerElement: HTMLDivElement;
   element: HTMLDivElement;
 
-  constructor(dimensions: { width: number; height: number }) {
+  constructor(
+    dimensions: { width: number; height: number },
+    level: string[][]
+  ) {
     this.dimensions = dimensions;
 
     this.containerElement = document.createElement("div");
@@ -25,7 +28,7 @@ class Grid {
       ) {
         const cell = document.createElement("div");
         cell.classList.add("grid-cell");
-        cell.innerHTML = `${rowIndex * this.dimensions.width + columnIndex}`;
+        cell.style.background = level[rowIndex][columnIndex];
         row.appendChild(cell);
       }
 
@@ -117,6 +120,8 @@ class Game {
   grid: Grid;
   sidebar: Sidebar;
 
+  level: string[][];
+
   constructor() {
     this.element = document.querySelector<HTMLDivElement>("#game")!;
 
@@ -124,7 +129,10 @@ class Game {
       width: 10,
       height: 10,
     };
-    this.grid = new Grid(gridDimensions);
+    this.level = new Array(gridDimensions.height)
+      .fill("")
+      .map(() => new Array(gridDimensions.width).fill("").map(() => "green"));
+    this.grid = new Grid(gridDimensions, this.level);
     this.sidebar = new Sidebar();
 
     this.element.appendChild(this.grid.containerElement);
