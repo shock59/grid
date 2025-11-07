@@ -8,6 +8,7 @@ export default class Game {
 
   grid: Grid;
   sidebar: Sidebar;
+  draggableTiles: DraggableTile[] = [];
 
   level: string[][];
 
@@ -23,10 +24,11 @@ export default class Game {
       .map(() => new Array(gridDimensions.width).fill("").map(() => "green"));
     this.grid = new Grid(gridDimensions, this.level);
     this.sidebar = new Sidebar();
+    this.draggableTiles.push(new DraggableTile(this));
 
     this.element.appendChild(this.grid.containerElement);
     this.element.appendChild(this.sidebar.element);
-    this.element.appendChild(new DraggableTile(this).element);
+    for (const dt of this.draggableTiles) this.element.appendChild(dt.element);
 
     window.addEventListener("resize", () => this.updateCellSizes());
     this.updateCellSizes();
@@ -43,6 +45,11 @@ export default class Game {
       .querySelector<HTMLDivElement>("#game")!
       .style.setProperty("--cell-size", `${cellSize}px`);
     this.grid.element.style.margin = `${cellSize / 2}px`;
+    for (const dt of this.draggableTiles) {
+      dt.element.style.transition = "none";
+      dt.updateStyle();
+      requestAnimationFrame(() => (dt.element.style.transition = ""));
+    }
   }
 
   lockDraggableTile(draggableTile: DraggableTile, event: MouseEvent) {
@@ -53,7 +60,7 @@ export default class Game {
     )) {
       const cellRect = cell.getBoundingClientRect();
       if (!contains(mouseXY, cellRect)) continue;
-      draggableTile.position = { x: cellRect.x, y: cellRect.y };
+      draggableTile.boundTo = cell;
       draggableTile.updateStyle();
       return;
     }

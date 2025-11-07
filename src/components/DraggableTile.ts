@@ -4,7 +4,10 @@ export default class DraggableTile {
   game: Game;
 
   element: HTMLDivElement;
+
   position: { x: number; y: number } = { x: 0, y: 0 };
+  boundTo: Element | undefined;
+
   beingDragged: boolean = false;
   dragOffset: { x: number; y: number } = { x: 0, y: 0 };
 
@@ -22,6 +25,8 @@ export default class DraggableTile {
   }
 
   mouseDown(event: MouseEvent) {
+    this.boundTo = undefined;
+
     this.element.style.cursor = "grabbing";
 
     const rect = this.element.getBoundingClientRect();
@@ -62,6 +67,11 @@ export default class DraggableTile {
   }
 
   updateStyle() {
+    if (this.boundTo) {
+      const cellRect = this.boundTo.getBoundingClientRect();
+      this.position = { x: cellRect.x, y: cellRect.y };
+    }
+
     this.element.style.left = `${this.position.x}px`;
     this.element.style.top = `${this.position.y}px`;
   }
