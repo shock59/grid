@@ -81,6 +81,10 @@ class DraggableTile {
       x: event.x - this.dragOffset.x,
       y: event.y - this.dragOffset.y,
     };
+    this.updateStyle();
+  }
+
+  updateStyle() {
     this.element.style.left = `${this.position.x}px`;
     this.element.style.top = `${this.position.y}px`;
   }
@@ -127,8 +131,17 @@ class Game {
     const dtRect = draggableTile.element.getBoundingClientRect();
     const gridRect = this.grid.element.getBoundingClientRect();
 
-    if (overlapping(dtRect, gridRect)) {
-      alert("You are overlapping with the grid!");
+    if (!overlapping(dtRect, gridRect)) return;
+
+    for (const cell of this.grid.element.querySelectorAll<HTMLDivElement>(
+      ".grid-cell"
+    )) {
+      const cellRect = cell.getBoundingClientRect();
+      if (overlapping(dtRect, cellRect)) {
+        draggableTile.position = { x: cellRect.x, y: cellRect.y };
+        draggableTile.updateStyle();
+        return;
+      }
     }
   }
 }
