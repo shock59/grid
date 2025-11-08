@@ -73,7 +73,6 @@ body {
   color: #eeeeee;
   cursor: grab;
   transition: 100ms;
-  background-image: url(images/pipeWaterDynamicHorizontal.png);
   background-repeat: no-repeat;
   background-size: cover;
   image-rendering: crisp-edges;

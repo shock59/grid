@@ -19,7 +19,12 @@ export default class Game {
     };
     this.grid = new Grid(gridDimensions);
     this.sidebar = new Sidebar();
-    this.draggableTiles.push(new DraggableTile(this));
+    this.draggableTiles.push(
+      new DraggableTile(this, {
+        type: "pipe",
+        direction: "horizontal",
+      })
+    );
 
     this.element.appendChild(this.grid.containerElement);
     this.element.appendChild(this.sidebar.element);

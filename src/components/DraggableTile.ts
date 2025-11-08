@@ -1,7 +1,13 @@
 import type Game from "./Game";
 
+function capitalizeFirstLetter(text: string) {
+  return String(text).charAt(0).toUpperCase() + String(text).slice(1);
+}
+
 export default class DraggableTile {
   game: Game;
+
+  type: DraggableTileOptions;
 
   element: HTMLDivElement;
 
@@ -11,11 +17,16 @@ export default class DraggableTile {
   beingDragged: boolean = false;
   dragOffset: { x: number; y: number } = { x: 0, y: 0 };
 
-  constructor(game: Game) {
+  constructor(game: Game, type: DraggableTileOptions) {
     this.game = game;
+
+    this.type = type;
 
     this.element = document.createElement("div");
     this.element.classList.add("draggable-tile");
+    this.element.style.backgroundImage = `url(images/pipeWaterDynamic${capitalizeFirstLetter(
+      type.direction
+    )}.png)`;
 
     this.updateStyle();
 
