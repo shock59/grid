@@ -39,7 +39,6 @@ export default class Game {
       height: gridDimensions.height - 2,
     };
     this.grid = new Grid(gridDimensions);
-    this.sidebar = new Sidebar();
 
     const houseLocation = randomLocation(paddedGridDimensions);
     const waterLocation = randomLocation(paddedGridDimensions, [houseLocation]);
@@ -49,6 +48,8 @@ export default class Game {
     waterLocation.y++;
 
     const pipes = createPipes(gridDimensions, houseLocation, waterLocation);
+
+    this.sidebar = new Sidebar(pipes.length);
 
     this.draggableTiles.push(
       new Tile(
@@ -67,17 +68,8 @@ export default class Game {
         },
         this.grid.cellElements[waterLocation.y][waterLocation.x]
       ),
-      new Tile(
-        this,
-        {
-          type: "pipe",
-          static: false,
-          direction: "horizontal",
-        },
-        this.sidebar.holderElements[0]
-      ),
       ...pipes.map(
-        (pipe) =>
+        (pipe, index) =>
           new Tile(
             this,
             {
@@ -85,7 +77,7 @@ export default class Game {
               static: false,
               direction: pipe.direction,
             },
-            this.grid.cellElements[pipe.coordinates.y][pipe.coordinates.x]
+            this.sidebar.holderElements[index]
           )
       )
     );
