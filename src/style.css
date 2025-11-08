@@ -38,7 +38,7 @@ body {
   background-image: url(images/grass.png);
   background-repeat: no-repeat;
   background-size: cover;
-  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 .sidebar {
@@ -74,7 +74,7 @@ body {
   transition: 100ms;
   background-repeat: no-repeat;
   background-size: cover;
-  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 .tile-draggable {
