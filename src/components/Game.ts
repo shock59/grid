@@ -63,51 +63,6 @@ export default class Game {
           direction: "horizontal",
         },
         this.sidebar.holderElements[0]
-      ),
-      new Tile(
-        this,
-        {
-          type: "pipe",
-          static: false,
-          direction: "vertical",
-        },
-        this.sidebar.holderElements[1]
-      ),
-      new Tile(
-        this,
-        {
-          type: "pipe",
-          static: false,
-          direction: "topLeft",
-        },
-        this.sidebar.holderElements[2]
-      ),
-      new Tile(
-        this,
-        {
-          type: "pipe",
-          static: false,
-          direction: "topRight",
-        },
-        this.sidebar.holderElements[3]
-      ),
-      new Tile(
-        this,
-        {
-          type: "pipe",
-          static: false,
-          direction: "bottomLeft",
-        },
-        this.sidebar.holderElements[4]
-      ),
-      new Tile(
-        this,
-        {
-          type: "pipe",
-          static: false,
-          direction: "bottomRight",
-        },
-        this.sidebar.holderElements[5]
       )
     );
 
