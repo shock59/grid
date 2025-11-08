@@ -13,6 +13,7 @@ export default class Tile {
 
   position: { x: number; y: number } = { x: 0, y: 0 };
   boundTo: Element | undefined;
+  previousBoundTo: Element | undefined;
 
   beingDragged: boolean = false;
   dragOffset: { x: number; y: number } = { x: 0, y: 0 };

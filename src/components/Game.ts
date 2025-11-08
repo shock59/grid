@@ -70,8 +70,14 @@ export default class Game {
       const cellRect = cell.getBoundingClientRect();
       if (!contains(mouseXY, cellRect)) continue;
       draggableTile.boundTo = cell;
+      draggableTile.previousBoundTo = draggableTile.boundTo;
       draggableTile.updateStyle();
       return;
+    }
+
+    if (draggableTile.previousBoundTo) {
+      draggableTile.boundTo = draggableTile.previousBoundTo;
+      draggableTile.updateStyle();
     }
   }
 }
