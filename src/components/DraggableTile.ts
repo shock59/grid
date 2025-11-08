@@ -7,7 +7,7 @@ function capitalizeFirstLetter(text: string) {
 export default class DraggableTile {
   game: Game;
 
-  type: DraggableTileOptions;
+  options: DraggableTileOptions;
 
   element: HTMLDivElement;
 
@@ -17,15 +17,15 @@ export default class DraggableTile {
   beingDragged: boolean = false;
   dragOffset: { x: number; y: number } = { x: 0, y: 0 };
 
-  constructor(game: Game, type: DraggableTileOptions) {
+  constructor(game: Game, options: DraggableTileOptions) {
     this.game = game;
 
-    this.type = type;
+    this.options = options;
 
     this.element = document.createElement("div");
     this.element.classList.add("draggable-tile");
     this.element.style.backgroundImage = `url(images/pipeWaterDynamic${capitalizeFirstLetter(
-      type.direction
+      options.direction
     )}.png)`;
 
     this.updateStyle();
