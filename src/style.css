@@ -63,7 +63,7 @@ body {
   margin-top: calc(var(--cell-size) / 2);
 }
 
-.draggable-tile {
+.tile {
   width: var(--cell-size);
   height: var(--cell-size);
   display: flex;
@@ -71,9 +71,12 @@ body {
   align-items: center;
   position: absolute;
   color: #eeeeee;
-  cursor: grab;
   transition: 100ms;
   background-repeat: no-repeat;
   background-size: cover;
   image-rendering: crisp-edges;
+}
+
+.tile-draggable {
+  cursor: grab;
 }

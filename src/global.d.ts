@@ -1,4 +1,4 @@
-type DraggableTilePipeOptions = {
+type TilePipeOptions = {
   type: "pipe";
   direction:
     | "horizontal"
@@ -9,4 +9,6 @@ type DraggableTilePipeOptions = {
     | "bottomRight";
 };
 
-type DraggableTileOptions = DraggableTilePipeOptions;
+type TileOptions = {
+  static: boolean;
+} & ({ type: "none" } | TilePipeOptions);

@@ -1,6 +1,6 @@
 import Grid from "./Grid";
 import contains from "../lib/contains";
-import DraggableTile from "./DraggableTile";
+import Tile from "./Tile";
 import Sidebar from "./Sidebar";
 
 export default class Game {
@@ -8,7 +8,7 @@ export default class Game {
 
   grid: Grid;
   sidebar: Sidebar;
-  draggableTiles: DraggableTile[] = [];
+  draggableTiles: Tile[] = [];
 
   constructor() {
     this.element = document.querySelector<HTMLDivElement>("#game")!;
@@ -20,8 +20,16 @@ export default class Game {
     this.grid = new Grid(gridDimensions);
     this.sidebar = new Sidebar();
     this.draggableTiles.push(
-      new DraggableTile(this, {
+      new Tile(this, {
         type: "pipe",
+        static: true,
+        direction: "vertical",
+      })
+    );
+    this.draggableTiles.push(
+      new Tile(this, {
+        type: "pipe",
+        static: false,
         direction: "horizontal",
       })
     );
@@ -52,7 +60,7 @@ export default class Game {
     }
   }
 
-  lockDraggableTile(draggableTile: DraggableTile, event: MouseEvent) {
+  lockDraggableTile(draggableTile: Tile, event: MouseEvent) {
     const mouseXY = { x: event.x, y: event.y };
 
     for (const cell of this.element.querySelectorAll<HTMLDivElement>(
