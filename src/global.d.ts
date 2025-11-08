@@ -8,6 +8,8 @@ type PipeDirection =
   | "bottomLeft"
   | "bottomRight";
 
+type PipeData = { coordinates: Coordinates; direction: PipeDirection };
+
 type TilePipeOptions = {
   type: "pipe";
   direction: PipeDirection;
