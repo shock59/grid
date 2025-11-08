@@ -49,7 +49,7 @@ export default class Game {
 
     const pipes = createPipes(gridDimensions, houseLocation, waterLocation);
 
-    this.sidebar = new Sidebar(pipes.length);
+    this.sidebar = new Sidebar(this, pipes.length);
 
     this.tiles.push(
       new Tile(
@@ -126,6 +126,14 @@ export default class Game {
     if (draggableTile.previousBoundTo) {
       draggableTile.boundTo = draggableTile.previousBoundTo;
       draggableTile.updateStyle();
+    }
+  }
+
+  scrolled() {
+    for (const tile of this.tiles) {
+      tile.element.style.transition = "none";
+      tile.updateStyle();
+      requestAnimationFrame(() => (tile.element.style.transition = ""));
     }
   }
 }

@@ -1,10 +1,13 @@
+import type Game from "./Game";
+
 export default class Sidebar {
   element: HTMLDivElement;
   holderElements: HTMLDivElement[] = [];
 
-  constructor(holderCount: number) {
+  constructor(game: Game, holderCount: number) {
     this.element = document.createElement("div");
     this.element.classList.add("sidebar");
+    this.element.addEventListener("scroll", () => game.scrolled());
 
     for (let i = 0; i < holderCount; i++) {
       const holder = document.createElement("div");
