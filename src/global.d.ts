@@ -1,12 +1,16 @@
+type Coordinates = { x: number; y: number };
+
+type PipeDirection =
+  | "horizontal"
+  | "vertical"
+  | "topLeft"
+  | "topRight"
+  | "bottomLeft"
+  | "bottomRight";
+
 type TilePipeOptions = {
   type: "pipe";
-  direction:
-    | "horizontal"
-    | "vertical"
-    | "topLeft"
-    | "topRight"
-    | "bottomLeft"
-    | "bottomRight";
+  direction: PipeDirection;
 };
 
 type TileHouseOptions = {

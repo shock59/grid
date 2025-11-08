@@ -5,8 +5,8 @@ import Sidebar from "./Sidebar";
 
 function randomLocation(
   range: { width: number; height: number },
-  not: { x: number; y: number }[] = []
-): { x: number; y: number } {
+  not: Coordinates[] = []
+): Coordinates {
   const location = {
     x: Math.floor(Math.random() * range.width),
     y: Math.floor(Math.random() * range.height),
@@ -17,6 +17,61 @@ function randomLocation(
     }
   }
   return location;
+}
+
+function randomFromArray<T>(array: T[]): T {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+const pipeDirections: PipeDirection[] = [
+  "horizontal",
+  "vertical",
+  "topLeft",
+  "topRight",
+  "bottomLeft",
+  "bottomRight",
+];
+function createPipes(
+  dimensions: { width: number; height: number },
+  houseLocation: Coordinates,
+  waterLocation: Coordinates
+) {
+  const pipes: { coordinates: Coordinates; direction: PipeDirection }[] = [];
+  const pipeDirection = randomFromArray(pipeDirections);
+  const randomAxis = Math.random() < 0.5 ? "x" : "y";
+  const pipeOffsetAxis = (() => {
+    switch (pipeDirection) {
+      case "horizontal":
+        return "x";
+      case "vertical":
+        return "y";
+      default:
+        return randomAxis;
+    }
+  })();
+  const randomOffsetDistance = Math.random() < 0.5 ? 1 : 1;
+  const pipeOffsetDistance = (() => {
+    switch (pipeDirection) {
+      case "topLeft":
+        return pipeOffsetAxis == "x" ? -1 : -1;
+      case "topRight":
+        return pipeOffsetAxis == "x" ? 1 : -1;
+      case "bottomLeft":
+        return pipeOffsetAxis == "x" ? -1 : 1;
+      case "bottomRight":
+        return pipeOffsetAxis == "x" ? 1 : 1;
+      default:
+        return randomOffsetDistance;
+    }
+  })();
+  pipes.push({
+    coordinates: {
+      x: houseLocation.x + (pipeOffsetAxis == "x" ? pipeOffsetDistance : 0),
+      y: houseLocation.y + (pipeOffsetAxis == "y" ? pipeOffsetDistance : 0),
+    },
+    direction: pipeDirection,
+  });
+  return pipes;
 }
 
 export default class Game {
@@ -33,11 +88,22 @@ export default class Game {
       width: 10,
       height: 10,
     };
+    const paddedGridDimensions = {
+      width: gridDimensions.width - 2,
+      height: gridDimensions.height - 2,
+    };
     this.grid = new Grid(gridDimensions);
     this.sidebar = new Sidebar();
 
-    const houseLocation = randomLocation(gridDimensions);
-    const waterLocation = randomLocation(gridDimensions, [houseLocation]);
+    const houseLocation = randomLocation(paddedGridDimensions);
+    const waterLocation = randomLocation(paddedGridDimensions, [houseLocation]);
+    houseLocation.x++;
+    houseLocation.y++;
+    waterLocation.x++;
+    waterLocation.y++;
+
+    const pipes = createPipes(gridDimensions, houseLocation, waterLocation);
+
     this.draggableTiles.push(
       new Tile(
         this,
@@ -63,6 +129,18 @@ export default class Game {
           direction: "horizontal",
         },
         this.sidebar.holderElements[0]
+      ),
+      ...pipes.map(
+        (pipe) =>
+          new Tile(
+            this,
+            {
+              type: "pipe",
+              static: false,
+              direction: pipe.direction,
+            },
+            this.grid.cellElements[pipe.coordinates.y][pipe.coordinates.x]
+          )
       )
     );
 
