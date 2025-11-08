@@ -25,7 +25,6 @@ export default class Grid {
       ) {
         const cell = document.createElement("div");
         cell.classList.add("grid-cell");
-        cell.style.background = level[rowIndex][columnIndex];
         row.appendChild(cell);
       }
 

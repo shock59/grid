@@ -35,7 +35,10 @@ body {
   justify-content: center;
   align-items: center;
   color: #eeeeee;
-  border: 1px #303030 solid;
+  background-image: url(images/grass.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  image-rendering: crisp-edges;
 }
 
 .sidebar {
@@ -68,7 +71,10 @@ body {
   align-items: center;
   position: absolute;
   color: #eeeeee;
-  outline: 1px #ff4040 solid;
   cursor: grab;
   transition: 100ms;
+  background-image: url(images/pipeWaterDynamicHorizontal.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  image-rendering: crisp-edges;
 }
