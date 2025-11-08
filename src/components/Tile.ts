@@ -39,6 +39,7 @@ export default class Tile {
     }.png)`;
 
     this.boundTo = boundTo;
+    this.previousBoundTo = this.boundTo;
 
     this.updateStyle();
 

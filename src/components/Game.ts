@@ -116,6 +116,7 @@ export default class Game {
     )) {
       const cellRect = cell.getBoundingClientRect();
       if (!contains(mouseXY, cellRect)) continue;
+      if (this.draggableTiles.find((dt) => dt.boundTo == cell)) continue;
       draggableTile.boundTo = cell;
       draggableTile.previousBoundTo = draggableTile.boundTo;
       draggableTile.updateStyle();
