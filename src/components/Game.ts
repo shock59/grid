@@ -21,9 +21,8 @@ export default class Game {
     this.sidebar = new Sidebar();
     this.draggableTiles.push(
       new Tile(this, {
-        type: "pipe",
+        type: "house",
         static: true,
-        direction: "vertical",
       })
     );
     this.draggableTiles.push(

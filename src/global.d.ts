@@ -9,6 +9,14 @@ type TilePipeOptions = {
     | "bottomRight";
 };
 
+type TileHouseOptions = {
+  type: "house";
+};
+
+type TileWaterOptions = {
+  type: "water";
+};
+
 type TileOptions = {
   static: boolean;
-} & ({ type: "none" } | TilePipeOptions);
+} & (TilePipeOptions | TileHouseOptions | TileWaterOptions);

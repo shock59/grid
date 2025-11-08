@@ -25,11 +25,13 @@ export default class Tile {
     this.element = document.createElement("div");
     this.element.classList.add("tile");
 
-    if (this.options.type == "pipe") {
-      this.element.style.backgroundImage = `url(images/pipeWater${
-        this.options.static ? "Static" : "Dynamic"
-      }${capitalizeFirstLetter(this.options.direction)}.png)`;
-    }
+    this.element.style.backgroundImage = `url(images/${
+      this.options.type == "pipe"
+        ? `pipeWater${
+            this.options.static ? "Static" : "Dynamic"
+          }${capitalizeFirstLetter(this.options.direction)}`
+        : this.options.type
+    }.png)`;
 
     this.updateStyle();
 
