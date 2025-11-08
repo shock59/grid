@@ -25,7 +25,7 @@ export default class Game {
 
   grid: Grid;
   sidebar: Sidebar;
-  draggableTiles: Tile[] = [];
+  tiles: Tile[] = [];
 
   constructor() {
     this.element = document.querySelector<HTMLDivElement>("#game")!;
@@ -51,7 +51,7 @@ export default class Game {
 
     this.sidebar = new Sidebar(pipes.length);
 
-    this.draggableTiles.push(
+    this.tiles.push(
       new Tile(
         this,
         {
@@ -84,7 +84,7 @@ export default class Game {
 
     this.element.appendChild(this.grid.containerElement);
     this.element.appendChild(this.sidebar.element);
-    for (const dt of this.draggableTiles) this.element.appendChild(dt.element);
+    for (const dt of this.tiles) this.element.appendChild(dt.element);
 
     window.addEventListener("resize", () => this.updateCellSizes());
     this.updateCellSizes();
@@ -101,7 +101,7 @@ export default class Game {
       .querySelector<HTMLDivElement>("#game")!
       .style.setProperty("--cell-size", `${cellSize}px`);
     this.grid.element.style.margin = `${cellSize / 2}px`;
-    for (const dt of this.draggableTiles) {
+    for (const dt of this.tiles) {
       dt.element.style.transition = "none";
       dt.updateStyle();
       requestAnimationFrame(() => (dt.element.style.transition = ""));
@@ -116,7 +116,7 @@ export default class Game {
     )) {
       const cellRect = cell.getBoundingClientRect();
       if (!contains(mouseXY, cellRect)) continue;
-      if (this.draggableTiles.find((dt) => dt.boundTo == cell)) continue;
+      if (this.tiles.find((tile) => tile.boundTo == cell)) continue;
       draggableTile.boundTo = cell;
       draggableTile.previousBoundTo = draggableTile.boundTo;
       draggableTile.updateStyle();
