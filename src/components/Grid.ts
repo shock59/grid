@@ -3,10 +3,7 @@ export default class Grid {
   containerElement: HTMLDivElement;
   element: HTMLDivElement;
 
-  constructor(
-    dimensions: { width: number; height: number },
-    level: string[][]
-  ) {
+  constructor(dimensions: { width: number; height: number }) {
     this.dimensions = dimensions;
 
     this.containerElement = document.createElement("div");

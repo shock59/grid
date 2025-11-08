@@ -10,8 +10,6 @@ export default class Game {
   sidebar: Sidebar;
   draggableTiles: DraggableTile[] = [];
 
-  level: string[][];
-
   constructor() {
     this.element = document.querySelector<HTMLDivElement>("#game")!;
 
@@ -19,10 +17,7 @@ export default class Game {
       width: 10,
       height: 10,
     };
-    this.level = new Array(gridDimensions.height)
-      .fill("")
-      .map(() => new Array(gridDimensions.width).fill("").map(() => "green"));
-    this.grid = new Grid(gridDimensions, this.level);
+    this.grid = new Grid(gridDimensions);
     this.sidebar = new Sidebar();
     this.draggableTiles.push(new DraggableTile(this));
 
