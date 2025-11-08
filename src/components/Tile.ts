@@ -11,7 +11,7 @@ export default class Tile {
 
   element: HTMLDivElement;
 
-  position: { x: number; y: number } = { x: 0, y: 0 };
+  position: Coordinates = { x: 0, y: 0 };
   boundTo: Element | undefined;
   previousBoundTo: Element | undefined;
 
