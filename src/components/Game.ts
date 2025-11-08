@@ -3,6 +3,22 @@ import contains from "../lib/contains";
 import Tile from "./Tile";
 import Sidebar from "./Sidebar";
 
+function randomLocation(
+  range: { width: number; height: number },
+  not: { x: number; y: number }[] = []
+): { x: number; y: number } {
+  const location = {
+    x: Math.floor(Math.random() * range.width),
+    y: Math.floor(Math.random() * range.height),
+  };
+  for (const notLocation of not) {
+    if (notLocation.x == location.x && notLocation.y == location.y) {
+      return randomLocation(range, not);
+    }
+  }
+  return location;
+}
+
 export default class Game {
   element: HTMLDivElement;
 
@@ -19,6 +35,9 @@ export default class Game {
     };
     this.grid = new Grid(gridDimensions);
     this.sidebar = new Sidebar();
+
+    const houseLocation = randomLocation(gridDimensions);
+    const waterLocation = randomLocation(gridDimensions, [houseLocation]);
     this.draggableTiles.push(
       new Tile(
         this,
@@ -26,7 +45,15 @@ export default class Game {
           type: "house",
           static: true,
         },
-        this.grid.element.querySelector(".grid-cell") ?? undefined
+        this.grid.cellElements[houseLocation.y][houseLocation.x]
+      ),
+      new Tile(
+        this,
+        {
+          type: "water",
+          static: true,
+        },
+        this.grid.cellElements[waterLocation.y][waterLocation.x]
       ),
       new Tile(this, {
         type: "pipe",
