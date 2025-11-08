@@ -17,7 +17,11 @@ export default class Tile {
   beingDragged: boolean = false;
   dragOffset: { x: number; y: number } = { x: 0, y: 0 };
 
-  constructor(game: Game, options: TileOptions) {
+  constructor(
+    game: Game,
+    options: TileOptions,
+    boundTo: Element | undefined = undefined
+  ) {
     this.game = game;
 
     this.options = options;
@@ -32,6 +36,8 @@ export default class Tile {
           }${capitalizeFirstLetter(this.options.direction)}`
         : this.options.type
     }.png)`;
+
+    this.boundTo = boundTo;
 
     this.updateStyle();
 

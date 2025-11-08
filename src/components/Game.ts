@@ -20,12 +20,14 @@ export default class Game {
     this.grid = new Grid(gridDimensions);
     this.sidebar = new Sidebar();
     this.draggableTiles.push(
-      new Tile(this, {
-        type: "house",
-        static: true,
-      })
-    );
-    this.draggableTiles.push(
+      new Tile(
+        this,
+        {
+          type: "house",
+          static: true,
+        },
+        this.grid.element.querySelector(".grid-cell") ?? undefined
+      ),
       new Tile(this, {
         type: "pipe",
         static: false,
