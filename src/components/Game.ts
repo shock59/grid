@@ -146,24 +146,31 @@ export default class Game {
 
       draggableTile.updateStyle();
 
-      console.log(
-        checkAnswer(
-          this.houseLocation,
-          this.waterLocation,
-          this.tiles
-            .filter(
-              (tile) =>
-                tile.options.type == "pipe" && tile.gridPosition != undefined
-            )
-            .map((pipeTile) => ({
-              coordinates: {
-                x: pipeTile.gridPosition!.x,
-                y: pipeTile.gridPosition!.y,
-              },
-              direction: (pipeTile.options as TilePipeOptions).direction,
-            }))
-        )
+      const gotAnswer = checkAnswer(
+        this.houseLocation,
+        this.waterLocation,
+        this.tiles
+          .filter(
+            (tile) =>
+              tile.options.type == "pipe" && tile.gridPosition != undefined
+          )
+          .map((pipeTile) => ({
+            coordinates: {
+              x: pipeTile.gridPosition!.x,
+              y: pipeTile.gridPosition!.y,
+            },
+            direction: (pipeTile.options as TilePipeOptions).direction,
+          }))
       );
+      console.log(gotAnswer);
+      if (gotAnswer) {
+        const popup = new Popup(
+          "Success!",
+          "Congratulations, you completed the grid!",
+          "New level"
+        );
+        this.element.appendChild(popup.element);
+      }
 
       return;
     }
