@@ -23,22 +23,27 @@ function randomLocation(
 }
 
 export default class Game {
-  element: HTMLDivElement;
+  element!: HTMLDivElement;
 
-  gridDimensions: { width: number; height: number };
-  houseLocation: Coordinates;
-  waterLocation: Coordinates;
+  gridDimensions!: { width: number; height: number };
+  houseLocation!: Coordinates;
+  waterLocation!: Coordinates;
 
-  grid: Grid;
-  sidebar: Sidebar;
+  grid!: Grid;
+  sidebar!: Sidebar;
   tiles: Tile[] = [];
 
   constructor() {
     this.element = document.querySelector<HTMLDivElement>("#game")!;
 
-    const popup = new Popup("Grid", "Welcome to grid!", "Start");
+    const popup = new Popup("Grid", "Welcome to grid!", "Start", () => {
+      this.setup();
+      window.addEventListener("resize", () => this.updateCellSizes());
+    });
     this.element.appendChild(popup.element);
+  }
 
+  setup() {
     this.gridDimensions = {
       width: 10,
       height: 10,
@@ -101,7 +106,6 @@ export default class Game {
     this.element.appendChild(this.sidebar.element);
     for (const dt of this.tiles) this.element.appendChild(dt.element);
 
-    window.addEventListener("resize", () => this.updateCellSizes());
     this.updateCellSizes();
   }
 
@@ -167,7 +171,15 @@ export default class Game {
         const popup = new Popup(
           "Success!",
           "Congratulations, you completed the grid!",
-          "New level"
+          "New level",
+          () => {
+            for (const element of this.element.querySelectorAll("*")) {
+              element.remove();
+            }
+            this.tiles = [];
+
+            this.setup();
+          }
         );
         this.element.appendChild(popup.element);
       }
