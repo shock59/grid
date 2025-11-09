@@ -198,7 +198,6 @@ export default class Game {
             direction: (pipeTile.options as TilePipeOptions).direction,
           }))
       );
-      console.log(gotAnswer);
       if (gotAnswer) {
         const popup = new Popup(
           "Success!",
