@@ -64,7 +64,7 @@ export default function checkAnswer(
       pipe.direction
     )
   )
-    offset *= -1;
+    if (axis == "x") offset *= -1;
 
   while (true) {
     const nextCoordinates: Coordinates = {
