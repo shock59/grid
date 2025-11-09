@@ -3,6 +3,7 @@ import contains from "../lib/contains";
 import Tile from "./Tile";
 import Sidebar from "./Sidebar";
 import createPipes from "../lib/createPipes";
+import checkAnswer from "../lib/checkAnswer";
 
 function randomLocation(
   range: { width: number; height: number },
@@ -23,6 +24,10 @@ function randomLocation(
 export default class Game {
   element: HTMLDivElement;
 
+  gridDimensions: { width: number; height: number };
+  houseLocation: Coordinates;
+  waterLocation: Coordinates;
+
   grid: Grid;
   sidebar: Sidebar;
   tiles: Tile[] = [];
@@ -30,24 +35,30 @@ export default class Game {
   constructor() {
     this.element = document.querySelector<HTMLDivElement>("#game")!;
 
-    const gridDimensions = {
+    this.gridDimensions = {
       width: 10,
       height: 10,
     };
     const paddedGridDimensions = {
-      width: gridDimensions.width - 2,
-      height: gridDimensions.height - 2,
+      width: this.gridDimensions.width - 2,
+      height: this.gridDimensions.height - 2,
     };
-    this.grid = new Grid(gridDimensions);
+    this.grid = new Grid(this.gridDimensions);
 
-    const houseLocation = randomLocation(paddedGridDimensions);
-    const waterLocation = randomLocation(paddedGridDimensions, [houseLocation]);
-    houseLocation.x++;
-    houseLocation.y++;
-    waterLocation.x++;
-    waterLocation.y++;
+    this.houseLocation = randomLocation(paddedGridDimensions);
+    this.waterLocation = randomLocation(paddedGridDimensions, [
+      this.houseLocation,
+    ]);
+    this.houseLocation.x++;
+    this.houseLocation.y++;
+    this.waterLocation.x++;
+    this.waterLocation.y++;
 
-    const pipes = createPipes(gridDimensions, houseLocation, waterLocation);
+    const pipes = createPipes(
+      this.gridDimensions,
+      this.houseLocation,
+      this.waterLocation
+    );
 
     this.sidebar = new Sidebar(this, pipes.length);
 
@@ -58,7 +69,7 @@ export default class Game {
           type: "house",
           static: true,
         },
-        this.grid.cellElements[houseLocation.y][houseLocation.x]
+        this.grid.cellElements[this.houseLocation.y][this.houseLocation.x]
       ),
       new Tile(
         this,
@@ -66,7 +77,7 @@ export default class Game {
           type: "water",
           static: true,
         },
-        this.grid.cellElements[waterLocation.y][waterLocation.x]
+        this.grid.cellElements[this.waterLocation.y][this.waterLocation.x]
       ),
       ...pipes.map(
         (pipe, index) =>
@@ -130,6 +141,26 @@ export default class Game {
       }
 
       draggableTile.updateStyle();
+
+      console.log(
+        checkAnswer(
+          this.houseLocation,
+          this.waterLocation,
+          this.tiles
+            .filter(
+              (tile) =>
+                tile.options.type == "pipe" && tile.gridPosition != undefined
+            )
+            .map((pipeTile) => ({
+              coordinates: {
+                x: pipeTile.gridPosition!.x,
+                y: pipeTile.gridPosition!.y,
+              },
+              direction: (pipeTile.options as TilePipeOptions).direction,
+            }))
+        )
+      );
+
       return;
     }
 
