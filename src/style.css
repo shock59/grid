@@ -94,7 +94,7 @@ body {
 }
 
 .popup {
-  width: 520px;
+  width: 580px;
   color: #e0e0e0;
   background: #202020;
   border: 2px #101010 solid;
@@ -108,14 +108,17 @@ body {
 .popup-button-container {
   width: calc(100% - 64px);
   padding: 8px 32px;
+  margin-bottom: 8px;
 }
 
 .popup-header {
   background: #101010;
   font-weight: bold;
+  margin-bottom: 8px;
 }
 
 .popup-button {
+  margin: 0 8px;
   padding: 8px 32px;
   color: inherit;
   background: #383838;

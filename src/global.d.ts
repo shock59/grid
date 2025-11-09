@@ -8,7 +8,14 @@ type PipeDirection =
   | "bottomLeft"
   | "bottomRight";
 
-type PipeData = { coordinates: Coordinates; direction: PipeDirection };
+type PipeData = {
+  coordinates: Coordinates;
+  direction: PipeDirection;
+};
+
+type PipeDataWithStatic = PipeData & {
+  static: boolean;
+};
 
 type TilePipeOptions = {
   type: "pipe";

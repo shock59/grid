@@ -4,8 +4,10 @@ export default class Popup {
   constructor(
     title: string,
     content: string,
-    buttonText: string,
-    callback: ((...args: unknown[]) => unknown) | undefined = undefined
+    buttons: {
+      text: string;
+      callback: ((...args: unknown[]) => unknown) | undefined;
+    }[]
   ) {
     const popupHeader = document.createElement("div");
     popupHeader.classList.add("popup-header");
@@ -15,17 +17,19 @@ export default class Popup {
     popupContent.classList.add("popup-content");
     popupContent.innerText = content;
 
-    const popupButton = document.createElement("button");
-    popupButton.classList.add("popup-button");
-    popupButton.innerText = buttonText;
-    popupButton.addEventListener("click", () => {
-      this.element.remove();
-      if (callback != undefined) callback();
-    });
-
     const popupButtonContainer = document.createElement("div");
     popupButtonContainer.classList.add("popup-button-container");
-    popupButtonContainer.appendChild(popupButton);
+
+    for (const buttonOptions of buttons) {
+      const popupButton = document.createElement("button");
+      popupButton.classList.add("popup-button");
+      popupButton.innerText = buttonOptions.text;
+      popupButton.addEventListener("click", () => {
+        this.element.remove();
+        if (buttonOptions.callback != undefined) buttonOptions.callback();
+      });
+      popupButtonContainer.appendChild(popupButton);
+    }
 
     const popup = document.createElement("div");
     popup.classList.add("popup");

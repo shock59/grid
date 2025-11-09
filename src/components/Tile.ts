@@ -22,7 +22,8 @@ export default class Tile {
   constructor(
     game: Game,
     options: TileOptions,
-    boundTo: Element | undefined = undefined
+    boundTo: Element | undefined = undefined,
+    gridPosition: Coordinates | undefined = undefined
   ) {
     this.game = game;
 
@@ -41,6 +42,7 @@ export default class Tile {
 
     this.boundTo = boundTo;
     this.previousBoundTo = this.boundTo;
+    this.gridPosition = gridPosition;
 
     this.updateStyle();
 
