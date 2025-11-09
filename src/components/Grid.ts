@@ -24,6 +24,8 @@ export default class Grid {
       ) {
         const cell = document.createElement("div");
         cell.classList.add("grid-cell");
+        cell.dataset.gridX = String(columnIndex);
+        cell.dataset.gridY = String(rowIndex);
         rowElements.push(cell);
         row.appendChild(cell);
       }

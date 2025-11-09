@@ -14,6 +14,7 @@ export default class Tile {
   position: Coordinates = { x: 0, y: 0 };
   boundTo: Element | undefined;
   previousBoundTo: Element | undefined;
+  gridPosition: Coordinates | undefined;
 
   beingDragged: boolean = false;
   dragOffset: { x: number; y: number } = { x: 0, y: 0 };

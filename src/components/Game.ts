@@ -119,6 +119,16 @@ export default class Game {
       if (this.tiles.find((tile) => tile.boundTo == cell)) continue;
       draggableTile.boundTo = cell;
       draggableTile.previousBoundTo = draggableTile.boundTo;
+
+      if (cell.dataset.gridX && cell.dataset.gridY) {
+        draggableTile.gridPosition = {
+          x: Number(cell.dataset.gridX),
+          y: Number(cell.dataset.gridY),
+        };
+      } else {
+        draggableTile.gridPosition = undefined;
+      }
+
       draggableTile.updateStyle();
       return;
     }
