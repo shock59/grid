@@ -81,3 +81,49 @@ body {
 .tile-draggable {
   cursor: grab;
 }
+
+.popup-background {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #00000080;
+}
+
+.popup {
+  width: 520px;
+  color: #e0e0e0;
+  background: #202020;
+  border: 2px #101010 solid;
+  font-size: 22px;
+  font-family: "Space Grotesk", sans-serif;
+  text-align: center;
+}
+
+.popup-header,
+.popup-content,
+.popup-button-container {
+  width: calc(100% - 64px);
+  padding: 8px 32px;
+}
+
+.popup-header {
+  background: #101010;
+  font-weight: bold;
+}
+
+.popup-button {
+  padding: 8px 32px;
+  color: inherit;
+  background: #383838;
+  border: none;
+  outline: none;
+  font: inherit;
+}
+
+.popup-button:hover {
+  background: #424242;
+}

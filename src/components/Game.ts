@@ -4,6 +4,7 @@ import Tile from "./Tile";
 import Sidebar from "./Sidebar";
 import createPipes from "../lib/createPipes";
 import checkAnswer from "../lib/checkAnswer";
+import Popup from "./Popup";
 
 function randomLocation(
   range: { width: number; height: number },
@@ -34,6 +35,9 @@ export default class Game {
 
   constructor() {
     this.element = document.querySelector<HTMLDivElement>("#game")!;
+
+    const popup = new Popup("Grid", "Welcome to grid!", "Start");
+    this.element.appendChild(popup.element);
 
     this.gridDimensions = {
       width: 10,
