@@ -238,4 +238,29 @@ export default class Game {
       requestAnimationFrame(() => (tile.element.style.transition = ""));
     }
   }
+
+  giveUp() {
+    const popup = new Popup(
+      "Oh no!",
+      "You gave up! Do you want to try again to try and complete a grid?",
+      [
+        {
+          text: "New easy level",
+          callback: () => {
+            this.reset();
+            this.setup("easy");
+          },
+        },
+        {
+          text: "New hard level",
+          callback: () => {
+            this.reset();
+            this.setup("hard");
+          },
+        },
+      ]
+    );
+    this.element.appendChild(popup.element);
+      
+  }
 }

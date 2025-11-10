@@ -11,6 +11,7 @@ export default class Sidebar {
 
     const button = document.createElement("button")
     button.innerText = "Give up"
+    button.addEventListener("click", () => game.giveUp())
     this.element.appendChild(button)
 
     for (let i = 0; i < holderCount; i++) {
