@@ -13,6 +13,10 @@ body {
   background: #101010;
   user-select: none;
   -webkit-user-select: none;
+  color: #e0e0e0;
+  font-size: 22px;
+  font-family: "Space Grotesk", sans-serif;
+  text-align: center;
 }
 
 .grid-container {
@@ -52,16 +56,19 @@ body {
   background-color: #202020;
 }
 
+.sidebar button {
+  width: var(--cell-size);
+  margin: calc(var(--cell-size) / 2) 0;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
 .sidebar-holder {
   width: var(--cell-size);
   height: var(--cell-size);
   margin-bottom: calc(var(--cell-size) / 2);
   flex-shrink: 0;
   background: #383838;
-}
-
-.sidebar-holder:first-child {
-  margin-top: calc(var(--cell-size) / 2);
 }
 
 .tile {
@@ -95,12 +102,8 @@ body {
 
 .popup {
   width: 580px;
-  color: #e0e0e0;
   background: #202020;
   border: 2px #101010 solid;
-  font-size: 22px;
-  font-family: "Space Grotesk", sans-serif;
-  text-align: center;
 }
 
 .popup-header,
@@ -119,6 +122,9 @@ body {
 
 .popup-button {
   margin: 0 8px;
+}
+
+button {
   padding: 8px 32px;
   color: inherit;
   background: #383838;
@@ -127,6 +133,6 @@ body {
   font: inherit;
 }
 
-.popup-button:hover {
+button:hover {
   background: #424242;
 }

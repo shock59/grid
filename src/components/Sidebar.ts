@@ -9,6 +9,10 @@ export default class Sidebar {
     this.element.classList.add("sidebar");
     this.element.addEventListener("scroll", () => game.scrolled());
 
+    const button = document.createElement("button")
+    button.innerText = "Give up"
+    this.element.appendChild(button)
+
     for (let i = 0; i < holderCount; i++) {
       const holder = document.createElement("div");
       holder.classList.add("sidebar-holder");
