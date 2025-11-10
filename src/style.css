@@ -40,7 +40,7 @@ body {
   justify-content: center;
   align-items: center;
   color: #eeeeee;
-  background-image: url(images/grass.png);
+  background-image: url(/grid/images/grass.png);
   background-repeat: no-repeat;
   background-size: cover;
   image-rendering: pixelated;
