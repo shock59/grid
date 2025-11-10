@@ -124,6 +124,14 @@ body {
   margin: 0 8px;
 }
 
+.popup-extra-content {
+  font-size: 16px;
+}
+
+.popup a {
+  color: #528fff;
+}
+
 button {
   padding: 8px 32px;
   color: inherit;

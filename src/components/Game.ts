@@ -55,7 +55,8 @@ export default class Game {
             window.addEventListener("resize", () => this.updateCellSizes());
           },
         },
-      ]
+      ],
+      'View the source code on <a href="https://github.com/shock59/grid" target="_blank">GitHub</a>'
     );
     this.element.appendChild(popup.element);
   }

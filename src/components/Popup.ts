@@ -7,7 +7,8 @@ export default class Popup {
     buttons: {
       text: string;
       callback: ((...args: unknown[]) => unknown) | undefined;
-    }[]
+    }[],
+    extraContent: string | undefined = undefined
   ) {
     const popupHeader = document.createElement("div");
     popupHeader.classList.add("popup-header");
@@ -36,6 +37,14 @@ export default class Popup {
     popup.appendChild(popupHeader);
     popup.appendChild(popupContent);
     popup.appendChild(popupButtonContainer);
+
+    if (extraContent != undefined) {
+      const popupExtraContent = document.createElement("div");
+      popupExtraContent.classList.add("popup-content");
+      popupExtraContent.classList.add("popup-extra-content");
+      popupExtraContent.innerHTML = extraContent;
+      popup.appendChild(popupExtraContent);
+    }
 
     this.element = document.createElement("div");
     this.element.classList.add("popup-background");
