@@ -89,7 +89,7 @@ export default class Game {
       pipes.length,
       difficulty == "easy" ? 0.3 : 0
     );
-    
+
     const pipesWithStatic: PipeDataWithStatic[] =
       difficulty == "hard"
         ? pipes.map((pipe) => ({ ...pipe, static: false }))
@@ -98,10 +98,7 @@ export default class Game {
             static: staticIndexes.includes(index),
           }));
 
-    this.sidebar = new Sidebar(
-      this,
-      notStaticIndexes.length
-    );
+    this.sidebar = new Sidebar(this, notStaticIndexes.length);
 
     this.tiles.push(
       new Tile(
