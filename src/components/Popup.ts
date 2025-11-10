@@ -15,7 +15,7 @@ export default class Popup {
 
     const popupContent = document.createElement("div");
     popupContent.classList.add("popup-content");
-    popupContent.innerText = content;
+    popupContent.innerHTML = content;
 
     const popupButtonContainer = document.createElement("div");
     popupButtonContainer.classList.add("popup-button-container");

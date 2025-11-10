@@ -37,7 +37,7 @@ export default class Game {
   constructor() {
     this.element = document.querySelector<HTMLDivElement>("#game")!;
 
-    const popup = new Popup("Grid", "Welcome to grid!", [
+    const popup = new Popup("Grid", "Welcome to Grid!<br><br>Your job is to fix the water grid by connecting the house to the water source using only the pipes provided.<br><br>Levels are randomly generated, and you can play either easy or hard ones.<br><br>To play, select a difficulty level and then drag pipes from the sidebar on the right into the level in the middle.<br><br>Good luck!", [
       {
         text: "Easy level",
         callback: () => {
