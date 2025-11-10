@@ -37,22 +37,26 @@ export default class Game {
   constructor() {
     this.element = document.querySelector<HTMLDivElement>("#game")!;
 
-    const popup = new Popup("Grid", "Welcome to Grid!<br><br>Your job is to fix the water grid by connecting the house to the water source using only the pipes provided.<br><br>Levels are randomly generated, and you can play either easy or hard ones.<br><br>To play, select a difficulty level and then drag pipes from the sidebar on the right into the level in the middle.<br><br>Good luck!", [
-      {
-        text: "Easy level",
-        callback: () => {
-          this.setup("easy");
-          window.addEventListener("resize", () => this.updateCellSizes());
+    const popup = new Popup(
+      "Grid",
+      "Welcome to Grid!<br><br>Your job is to fix the water grid by connecting the house to the water source using only the pipes provided.<br><br>Levels are randomly generated, and you can play either easy or hard ones.<br><br>To play, select a difficulty level and then drag pipes from the sidebar on the right into the level in the middle.<br><br>Good luck!",
+      [
+        {
+          text: "Easy level",
+          callback: () => {
+            this.setup("easy");
+            window.addEventListener("resize", () => this.updateCellSizes());
+          },
         },
-      },
-      {
-        text: "Hard level",
-        callback: () => {
-          this.setup("hard");
-          window.addEventListener("resize", () => this.updateCellSizes());
+        {
+          text: "Hard level",
+          callback: () => {
+            this.setup("hard");
+            window.addEventListener("resize", () => this.updateCellSizes());
+          },
         },
-      },
-    ]);
+      ]
+    );
     this.element.appendChild(popup.element);
   }
 
@@ -81,8 +85,11 @@ export default class Game {
       this.houseLocation,
       this.waterLocation
     );
-    const staticIndexes =
-      difficulty == "hard" ? [] : createStaticIndexes(pipes.length, 0.3);
+    const [notStaticIndexes, staticIndexes] = createStaticIndexes(
+      pipes.length,
+      difficulty == "easy" ? 0.3 : 0
+    );
+    
     const pipesWithStatic: PipeDataWithStatic[] =
       difficulty == "hard"
         ? pipes.map((pipe) => ({ ...pipe, static: false }))
@@ -91,7 +98,10 @@ export default class Game {
             static: staticIndexes.includes(index),
           }));
 
-    this.sidebar = new Sidebar(this, pipes.length);
+    this.sidebar = new Sidebar(
+      this,
+      notStaticIndexes.length
+    );
 
     this.tiles.push(
       new Tile(
@@ -120,7 +130,7 @@ export default class Game {
               direction: pipe.direction,
             },
             !pipe.static
-              ? this.sidebar.holderElements[index]
+              ? this.sidebar.holderElements[notStaticIndexes.indexOf(index)]
               : this.grid.cellElements[pipe.coordinates.y][pipe.coordinates.x],
             pipe.static ? pipe.coordinates : undefined
           )
@@ -261,6 +271,5 @@ export default class Game {
       ]
     );
     this.element.appendChild(popup.element);
-      
   }
 }

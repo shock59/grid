@@ -8,12 +8,12 @@ export default function createStaticIndexes(
 ) {
   if (length == 0) return [];
 
-  let notStatics = new Array(length).map((_, index) => index);
+  let notStatics = new Array(length).fill(undefined).map((_, index) => index);
   let statics: number[] = [];
   for (let i = 0; i < Math.floor(length * staticPercentage); i++) {
     const index = randomIndexFromArray(notStatics);
-    notStatics.slice(index, 1);
-    statics.push(index);
+    const spliced = notStatics.splice(index, 1);
+    statics.push(spliced[0]);
   }
-  return statics;
+  return [notStatics, statics];
 }
